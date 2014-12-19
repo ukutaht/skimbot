@@ -6,6 +6,7 @@ class Skimism
     ['boom got \'em', 4],
     ['wat bro', 3],
     ['whoa inappropiate', 3],
+    [':watman:', 3],
     ['inappropriate', 3],
     [':thisguy:', 3],
     [':thisgal:', 3],
