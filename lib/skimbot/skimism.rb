@@ -8,7 +8,12 @@ class Skimism
     ['boom, got \'em', 4],
     ['whoa, inappropiate', 3],
     ['inappropriate', 4],
-    ['got \'em', 7]]
+    ['got \'em', 7],
+    [':thisguy:', 2],
+    [':thisgal:', 2],
+    [':skim:', 1],
+    [':boom:',1]]
+
 
   PHRASES = PHRASES_WITH_FREQUENCIES.map(&:first)
 end
