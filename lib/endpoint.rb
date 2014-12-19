@@ -4,19 +4,16 @@ require 'skimbot/bot'
 
 class SkimEndpoint < Sinatra::Base
 
-  def initialize(app=nil, allowed_to_speak=true)
-    super(app)
-    @allowed_to_speak = allowed_to_speak
-  end
+  @@allowed_to_speak = true
 
   post '/slack' do
     content_type :json 
-    case
-    when text.match(/skim shut up/)
+
+    if text.match(/\bskim shut up\b/)
       shut_up!
-    when text.match(/hey skim/)
+    elsif text.match(/\bhey skim\b/)
       speak_again!
-    when text.match(/\bskim\b/)
+    elsif text.match(/\bskim\b/)
       bot_message
     else
       no_response
@@ -28,17 +25,17 @@ class SkimEndpoint < Sinatra::Base
   end
 
   def shut_up!
-    @allowed_to_speak = false
+    @@allowed_to_speak = false
     {text: Skimism::SHUT_UP_RESPONSE}.to_json
   end
 
   def speak_again!
-    @allowed_to_speak = true
+    @@allowed_to_speak = true
     {text: Skimism::ALLOWED_TO_SPEAK_RESPONSE}.to_json
   end
 
   def bot_message
-    if @allowed_to_speak
+    if @@allowed_to_speak
       {text:  Bot.new.response}.to_json
     else
       no_response

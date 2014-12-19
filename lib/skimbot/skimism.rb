@@ -20,4 +20,5 @@ class Skimism
 
   PHRASES = PHRASES_WITH_FREQUENCIES.map(&:first)
   SHUT_UP_RESPONSE = 'whoa fine'
+  ALLOWED_TO_SPEAK_RESPONSE = 'hey'
 end

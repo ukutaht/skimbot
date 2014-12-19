@@ -20,6 +20,13 @@ RSpec.describe 'skimbot endpoint' do
   it 'shuts up' do
     post '/slack', {text: 'skim shut up'}
     expect(last_response_json['text']).to eq Skimism::SHUT_UP_RESPONSE
+    post '/slack', {text: 'skim'}
+    expect(last_response.status).to eq 204
+  end
+
+  it 'comes back up' do
+    post '/slack', {text: 'hey skim'}
+    expect(last_response_json['text']).to eq Skimism::ALLOWED_TO_SPEAK_RESPONSE
   end
 
   it 'responds 200 ok when skim is mentioned' do
