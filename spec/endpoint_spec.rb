@@ -24,9 +24,4 @@ RSpec.describe 'skimbot endpoint' do
     message = last_response_json['text']
     expect(Skimism::PHRASES).to include(message)
   end
-
-  it 'sends the slack token back' do
-    post '/slack', {"token" => 'the token'}.to_json
-    expect(last_response_json["token"]).to eq "the token"
-  end
 end
