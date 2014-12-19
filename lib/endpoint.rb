@@ -16,5 +16,5 @@ def skim_mentioned?
 end
 
 def request_text
-  JSON.parse(request.body.read)["text"]
+  params["text"]
 end

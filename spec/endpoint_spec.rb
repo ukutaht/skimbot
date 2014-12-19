@@ -6,14 +6,14 @@ ENV['RACK_ENV'] = 'test'
 RSpec.describe 'skimbot endpoint' do
   include Rack::Test::Methods
   let(:app) {Sinatra::Application}
-  before {post '/slack', {text: 'skim'}.to_json}
+  before {post '/slack', {text: 'skim'}}
 
   def last_response_json
     JSON.parse(last_response.body)
   end
 
   it 'responds with 204 no content when skim is not mentioned' do
-    post '/slack', {text: ''}.to_json
+    post '/slack', {text: ''}
     expect(last_response.status).to eq 204
   end
 
