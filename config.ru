@@ -3,4 +3,4 @@ $LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require 'endpoint'
 
-run Sinatra::Application
+run SkimEndpoint.new

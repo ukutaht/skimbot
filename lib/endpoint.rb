@@ -2,8 +2,6 @@ require 'sinatra'
 require 'json'
 require 'skimbot/bot'
 
-allowed_to_speak = true
-
 class SkimEndpoint < Sinatra::Base
 
   def initialize(app=nil, allowed_to_speak=true)
