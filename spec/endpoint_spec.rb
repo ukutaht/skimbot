@@ -5,7 +5,7 @@ ENV['RACK_ENV'] = 'test'
 
 RSpec.describe 'skimbot endpoint' do
   include Rack::Test::Methods
-  let(:app) {Sinatra::Application}
+  let(:app) {SkimEndpoint.new}
   before {post '/slack', {text: 'skim'}}
 
   def last_response_json
@@ -17,8 +17,13 @@ RSpec.describe 'skimbot endpoint' do
     expect(last_response.status).to eq 204
   end
 
-  it 'responds to slack request' do
-    expect(last_response).to be_ok
+  it 'shuts up' do
+    post '/slack', {text: 'skim shut up'}
+    expect(last_response_json['text']).to eq Skimism::SHUT_UP_RESPONSE
+  end
+
+  it 'responds 200 ok when skim is mentioned' do
+    expect(last_response.status).to eq 200
   end
 
   it 'sends message as slack JSON response' do
