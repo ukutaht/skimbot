@@ -45,13 +45,13 @@ RSpec.describe 'skimbot endpoint' do
   end
 
   it 'interjects after 100 messages' do
-    99.times {post '/slack', {text: 'something'}}
+    49.times {post '/slack', {text: 'something'}}
     message = last_response_json['text']
     expect(Skimism::PHRASES).to include(message)
   end
 
   it 'resets counter after 100 messages' do
-    100.times {post '/slack', {text: 'something'}}
+    50.times {post '/slack', {text: 'something'}}
     expect(last_response.status).to eq 204
   end
 end

@@ -32,7 +32,7 @@ class Bot
   end
 
   def interject_maybe
-    if @msg_counter > 99
+    if @msg_counter > 49
       @msg_counter = 0
       bot_message
     end
