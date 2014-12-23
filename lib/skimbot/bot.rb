@@ -11,8 +11,10 @@ class Bot
     @msg_counter = msg_counter
   end
 
-
   def response(text)
+    puts "MESSAGE_COUNT: #{@msg_counter}"
+    puts "CAN SPEAK: #{@can_speak}"
+
     @msg_counter += 1
     if text.match(/\bskimbot shut up\b/)
       @can_speak = false
