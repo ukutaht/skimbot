@@ -5,8 +5,10 @@ ENV['RACK_ENV'] = 'test'
 
 RSpec.describe 'skimbot endpoint' do
   include Rack::Test::Methods
-  let(:app) {SkimEndpoint.new}
-  before {post '/slack', {text: 'skim'}}
+  let(:app) {SkimEndpoint.new!}
+  before {
+    Bot.instance = Bot.new
+    post '/slack', {text: 'skimbot'}}
 
   def last_response_json
     JSON.parse(last_response.body)
@@ -18,14 +20,14 @@ RSpec.describe 'skimbot endpoint' do
   end
 
   it 'shuts up' do
-    post '/slack', {text: 'skim shut up'}
+    post '/slack', {text: 'skimbot shut up'}
     expect(last_response_json['text']).to eq Skimism::SHUT_UP_RESPONSE
-    post '/slack', {text: 'skim'}
+    post '/slack', {text: 'skimbot'}
     expect(last_response.status).to eq 204
   end
 
   it 'comes back up' do
-    post '/slack', {text: 'hey skim'}
+    post '/slack', {text: 'hey skimbot'}
     expect(last_response_json['text']).to eq Skimism::ALLOWED_TO_SPEAK_RESPONSE
   end
 
@@ -40,5 +42,16 @@ RSpec.describe 'skimbot endpoint' do
   it 'sends a skimism as a response' do
     message = last_response_json['text']
     expect(Skimism::PHRASES).to include(message)
+  end
+
+  it 'interjects after 100 messages' do
+    99.times {post '/slack', {text: 'something'}}
+    message = last_response_json['text']
+    expect(Skimism::PHRASES).to include(message)
+  end
+
+  it 'resets counter after 100 messages' do
+    100.times {post '/slack', {text: 'something'}}
+    expect(last_response.status).to eq 204
   end
 end
